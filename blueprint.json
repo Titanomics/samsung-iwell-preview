@@ -67,6 +67,10 @@
     {
       "step": "runPHP",
       "code": "<?php\n// 원장 검토 표시 다시 계산(미리보기 전용 — 운영 코드는 그대로). 승인 지문은 공개 화면 결과(주소 포함)로 계산되므로 주소가 바뀌면 맞지 않는다.\n// 로컬에서 원장 승인 기록이 있는 게시 페이지만, 시험 원장 계정(director1)으로 정식 승인 경로(원장 저장 → PageMeta::recordOnSave → 검토 기록 + 지문)를 다시 탄다.\n// 검토일은 이 미리보기를 연 날짜가 된다. 미리보기 주소가 https 면 공개 응답과 같게 https 문맥으로 계산한다(테마 파일 주소 등).\nrequire_once '/wordpress/wp-load.php';\nif ( 'https' === wp_parse_url( home_url(), PHP_URL_SCHEME ) ) { $_SERVER['HTTPS'] = 'on'; }\n$director = get_user_by( 'login', 'director1' );\nif ( ! $director ) { throw new RuntimeException( 'director1 없음' ); }\n$ids = get_posts( array( 'post_type' => 'page', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'orderby' => 'ID', 'order' => 'ASC', 'meta_query' => array( array( 'key' => 'iwell_reviewed_by', 'value' => 0, 'compare' => '>', 'type' => 'NUMERIC' ) ) ) );\nwp_set_current_user( $director->ID );\n$out = array();\nforeach ( $ids as $id ) {\n\t$r = wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ), true );\n\tclean_post_cache( $id );\n\t$ok = ! is_wp_error( $r ) && class_exists( '\\\\Iwell\\\\Core\\\\Seal' ) && \\Iwell\\Core\\Seal::valid( get_post( $id ) );\n\t$out[] = $id . '=' . get_post_meta( $id, 'iwell_reviewed_by', true ) . '/' . get_post_meta( $id, 'iwell_reviewed_at', true ) . ( $ok ? '/ok' : '/x' );\n}\nwp_set_current_user( 0 );\necho 'review recompute: ' . implode( ' ', $out );\n"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n// 방문자 화면(미리보기 전용): Playground 웹은 'admin' 이름의 계정으로 자동 로그인한다(\"login\": false 로도 꺼지지 않음 — 2026-11-18 실측).\n// 자동 로그인은 그 이름의 계정이 없으면 하지 않으므로(Playground 1-auto-login.php: get_user_by('login', …) 없으면 return) 관리자 로그인 이름만 바꾼다.\n// 비밀번호는 이미 아무도 모르는 임의 값이다. 직원·원장 계정은 그대로.\nrequire_once '/wordpress/wp-load.php';\nglobal $wpdb;\n$n = $wpdb->update( $wpdb->users, array( 'user_login' => 'preview-admin-' . wp_generate_password( 10, false ) ), array( 'user_login' => 'admin' ) );\nwp_cache_flush();\necho 'admin login renamed: ' . (int) $n . ', admin exists: ' . ( get_user_by( 'login', 'admin' ) ? 'yes' : 'no' );\n"
     }
   ]
 }
