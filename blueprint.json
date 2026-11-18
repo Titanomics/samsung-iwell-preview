@@ -52,6 +52,7 @@
     {
       "step": "setSiteOptions",
       "options": {
+        "blogname": "삼성아이웰소아청소년과",
         "timezone_string": "Asia/Seoul",
         "revisionary_activation_done": "1",
         "rank_math_registration_skip": "1",
