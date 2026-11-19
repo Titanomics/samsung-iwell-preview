@@ -28,6 +28,11 @@
 	--iwell-bottom-h: 62px;
 	--iwell-radius: 16px;
 	--iwell-shadow: 0 10px 28px rgba(21, 59, 122, 0.1);
+	/* 글 단락 기준(수정 1차 — 대표 "문단 여백이나 글 단락 세부 수정", 2026-11-19): 본문 줄 간격·문단 사이 여백을 이 토큰 하나로 맞춘다. */
+	--iwell-lh-body: 1.75;
+	--iwell-lh-tight: 1.45;
+	--iwell-flow: 0.85em;
+	--iwell-flow-sm: 0.5em;
 }
 
 @media (min-width: 768px) {
@@ -55,8 +60,10 @@ body {
 	margin: 0;
 	background: #fff;
 	color: var(--iwell-ink);
+	/* 한글은 낱말 가운데서 끊지 않는다(keep-all). 긴 영문·숫자·주소는 줄을 넘칠 때만 끊는다(break-word — anywhere 는 최소 폭 계산까지 바꿔
+	   좁은 칸에서 한글 낱말이 글자 단위로 갈라졌다: 수정 전 메가 메뉴 "치료·급여 / 기준", "오시는 길 / ·주차"). */
 	word-break: keep-all;
-	overflow-wrap: anywhere;
+	overflow-wrap: break-word;
 	-webkit-text-size-adjust: 100%;
 	/* 하단 바 높이 + 위 테두리 1px — 바가 바닥글 끝을 가리지 않게. */
 	padding-bottom: calc(var(--iwell-bottom-h) + 1px + env(safe-area-inset-bottom, 0px));
@@ -77,6 +84,53 @@ body {
 img {
 	max-width: 100%;
 	height: auto;
+}
+
+/* 제목·짧은 문구는 줄 길이를 고르게(balance), 본문은 마지막 줄이 한 낱말만 남지 않게(pretty).
+   부모 테마(Twenty Twenty-Five)가 h1~h6·p 에 pretty 를 같은 세기로 뒤에 걸어(실측) 제목은 body 를 붙여 이긴다. */
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6,
+.iwell-concern__label,
+.iwell-clinic-card__title,
+.iwell-btn {
+	text-wrap: balance;
+}
+
+p,
+li,
+dd,
+td,
+th,
+figcaption,
+summary {
+	text-wrap: pretty;
+}
+
+/* 메뉴 이름 짧은 마디(서버 menuLabel — 끊을 자리는 <wbr>)는 한 줄로. */
+.iwell-nw {
+	white-space: nowrap;
+}
+
+.iwell-gnb__sub a,
+.iwell-drawer__chips a,
+.iwell-footer-nav__sub a,
+.iwell-tabs a {
+	text-wrap: balance;
+}
+
+/* 본문 글 단락 — 줄 간격·문단 사이 = 토큰(손으로 넣은 줄바꿈 없이 문단으로). */
+.iwell-article .wp-block-post-content > p,
+.iwell-article .wp-block-post-content > ul,
+.iwell-article .wp-block-post-content > ol {
+	line-height: var(--iwell-lh-body);
+}
+
+.iwell-article .wp-block-post-content > p + p {
+	margin-block-start: var(--iwell-flow);
 }
 
 [id] {
@@ -253,9 +307,28 @@ body .iwell-tour > * {
 	color: var(--iwell-on-navy-soft);
 }
 
+/* 수정 1차 Codex 교차 검증(2026-11-19): 휴대폰에서도 "매주 월요일 휴진"이 보여야 한다 — 숨기지 않고 둘째 줄로(띠 높이도 같이 늘려 머리 고정 위치를 맞춘다). */
 @media (max-width: 767px) {
+	:root {
+		--iwell-topbar-h: 64px;
+	}
+
+	.iwell-topbar__inner {
+		flex-direction: column;
+		justify-content: center;
+		gap: 2px;
+		white-space: normal;
+		text-align: center;
+	}
+
 	.iwell-topbar .iwell-topbar__note {
-		display: none;
+		font-size: 0.75rem;
+		line-height: 1.35;
+		text-wrap: balance;
+	}
+
+	.iwell-topbar .iwell-topbar__note::before {
+		content: none;
 	}
 }
 
@@ -590,7 +663,9 @@ html:has(.iwell-drawer[open]) {
 
 .iwell-bottom-bar ul {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
+	/* 칸 수 = 그린 링크 수(바로가기 주소가 없으면 3칸 — 수정 1차), 같은 폭. */
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(0, 1fr);
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -1022,6 +1097,45 @@ body .iwell-section__inner > * {
 
 .iwell-concerns > li {
 	margin: 0;
+}
+
+/* 수정 1차(병원 의견 2026-11-19): 성장·성조숙증 타일을 첫 줄 전체 폭·큰 글씨로. */
+.iwell-concerns > li.is-featured {
+	grid-column: 1 / -1;
+}
+
+.iwell-concerns > li.is-featured .iwell-concern {
+	grid-template-columns: 64px minmax(0, 1fr) 20px;
+	padding: 22px 24px;
+	border-color: rgba(0, 159, 227, 0.45);
+	background: var(--iwell-tint);
+}
+
+.iwell-concerns > li.is-featured .iwell-concern__icon {
+	width: 64px;
+	height: 64px;
+	background: #fff;
+}
+
+.iwell-concerns > li.is-featured .iwell-concern__icon .iwell-icon {
+	width: 34px;
+	height: 34px;
+}
+
+.iwell-concerns > li.is-featured .iwell-concern__label {
+	font-size: 1.375rem;
+}
+
+.iwell-concerns > li.is-featured .iwell-concern__line {
+	font-size: 0.9375rem;
+	color: var(--iwell-ink);
+}
+
+/* 2열(640~1023px)에서 강조 칸 뒤 3칸이면 마지막 칸을 한 줄 전체로(빈 칸 없이). */
+@media (min-width: 640px) and (max-width: 1023px) {
+	.iwell-concerns > li.is-featured ~ li:last-child:nth-child(even) {
+		grid-column: 1 / -1;
+	}
 }
 
 .iwell-concern {
@@ -1640,9 +1754,9 @@ body .iwell-answer > * {
 }
 
 .iwell-answer > p {
-	margin: 0 0 6px;
+	margin: 0 0 var(--iwell-flow-sm);
 	font-size: 1.0625rem;
-	line-height: 1.75;
+	line-height: var(--iwell-lh-body);
 }
 
 .iwell-answer .iwell-answer__label {
@@ -1680,7 +1794,8 @@ body .iwell-sec > * {
 }
 
 .iwell-sec > p {
-	margin: 0 0 12px;
+	margin: 0 0 var(--iwell-flow);
+	line-height: var(--iwell-lh-body);
 }
 
 .iwell-sec > h3 {
@@ -1883,7 +1998,12 @@ body .iwell-sec > * {
 }
 
 .iwell-faq .rank-math-answer p {
-	margin: 0;
+	margin: 0 0 var(--iwell-flow-sm);
+	line-height: var(--iwell-lh-body);
+}
+
+.iwell-faq .rank-math-answer p:last-child {
+	margin-bottom: 0;
 }
 
 /* 홈 FAQ 답 끝 관련 페이지 링크(수정 2) — 누르는 높이 44px */
@@ -2342,4 +2462,46 @@ body .iwell-board-item > * {
 		animation: none !important;
 		scroll-behavior: auto !important;
 	}
+}
+
+/* ── 상담·예약 안내(/consult/ — 템플릿 page-consult, 수정 1차) ───────────────── */
+
+.iwell-consult-guide {
+	margin-top: 8px !important;
+}
+
+.iwell-consult-guide__lead {
+	margin: 0 0 var(--iwell-flow);
+	font-size: 1.0625rem;
+	line-height: var(--iwell-lh-body);
+}
+
+.iwell-consult-guide__buttons {
+	display: grid;
+	gap: 10px;
+}
+
+@media (min-width: 600px) {
+	.iwell-consult-guide__buttons {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+.iwell-consult-guide__note {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	margin: 24px 0 0;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: var(--iwell-ivory);
+	color: var(--iwell-ink);
+	font-size: 0.9375rem;
+	line-height: var(--iwell-lh-tight);
+}
+
+.iwell-consult-guide__note .iwell-icon {
+	margin-top: 1px;
+	color: var(--iwell-navy);
 }
