@@ -2,7 +2,7 @@
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
     "title": "삼성아이웰 홈페이지 미리보기",
-    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation ecd2fc6 + sitemap 제목 b65e54b.",
+    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation 8a7efdd 의료진 사진·목록·출처 수정 2차.",
     "author": "Titanomics"
   },
   "landingPage": "/",
@@ -16,7 +16,7 @@
       "step": "importWordPressFiles",
       "wordPressFilesZip": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/86cc21128bc732661271da12e5b50e242cd0ff39/content.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/6b5a01900256d145a8d193a9e73996a0ab6fdf48/content.zip"
       }
     },
     {
@@ -54,7 +54,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/86cc21128bc732661271da12e5b50e242cd0ff39/kboard-6.8.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/6b5a01900256d145a8d193a9e73996a0ab6fdf48/kboard-6.8.zip"
       },
       "options": {
         "activate": true,
@@ -65,7 +65,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/86cc21128bc732661271da12e5b50e242cd0ff39/kboard-comments-5.7.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/6b5a01900256d145a8d193a9e73996a0ab6fdf48/kboard-comments-5.7.zip"
       },
       "options": {
         "activate": true,
@@ -76,7 +76,7 @@
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/86cc21128bc732661271da12e5b50e242cd0ff39/iwell-theme.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/6b5a01900256d145a8d193a9e73996a0ab6fdf48/iwell-theme.zip"
       },
       "options": {
         "activate": true
@@ -86,7 +86,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/86cc21128bc732661271da12e5b50e242cd0ff39/iwell-core.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/6b5a01900256d145a8d193a9e73996a0ab6fdf48/iwell-core.zip"
       },
       "options": {
         "activate": true
