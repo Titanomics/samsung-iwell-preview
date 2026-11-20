@@ -1346,6 +1346,34 @@ body .iwell-doctor__text > * {
 	padding-left: 1.2em;
 }
 
+.iwell-doctor-cards {
+	display: grid;
+	gap: 40px;
+	margin-block: 40px !important;
+}
+
+.iwell-doctor-cards .iwell-doctor__photo {
+	max-width: 500px;
+}
+
+.iwell-doctor-cards .iwell-doctor__photo img {
+	height: auto;
+	aspect-ratio: auto;
+}
+
+.iwell-doctor-cards .iwell-doctor--no-photo {
+	display: block;
+}
+
+.iwell-doctor-cards .iwell-doctor__text {
+	word-break: keep-all;
+	overflow-wrap: anywhere;
+}
+
+.iwell-doctor-cards .iwell-doctor__name {
+	text-wrap: balance;
+}
+
 /* 클리닉 카드 */
 .iwell-clinic-cards {
 	display: grid;
