@@ -770,6 +770,37 @@ html:has(.iwell-drawer[open]) {
 		width: 20px;
 		height: 20px;
 	}
+
+	/* 유튜브·블로그 공식 로고(2026-11-23) — 색·모양 그대로, 크기만. */
+	.iwell-quick-bar .iwell-logo {
+		display: block;
+		width: 22px;
+		height: 22px;
+	}
+}
+
+/* 낮은 창 — 퀵바 최대 8칸(바로가기 3 + 전화·진료시간·유튜브·블로그·맨 위로)이 1440×500 에서도 화면 안에 들어가게 단추를 줄인다
+   (8×48 + 7×6 = 426px, 2026-11-23 Codex P1 — 시험 tests/e2e/consult.spec.ts). */
+@media (min-width: 1280px) and (max-height: 640px) {
+	.iwell-quick-bar ul {
+		gap: 6px;
+	}
+
+	.iwell-quick-bar a {
+		width: 48px;
+		height: 48px;
+		font-size: 0.625rem;
+	}
+
+	.iwell-quick-bar .iwell-icon {
+		width: 18px;
+		height: 18px;
+	}
+
+	.iwell-quick-bar .iwell-logo {
+		width: 20px;
+		height: 20px;
+	}
 }
 
 /* ── 바닥글 ───────────────────────────────────────── */
@@ -858,6 +889,12 @@ html:has(.iwell-drawer[open]) {
 }
 
 .iwell-footer .iwell-footer-nav__legal a {
+	font-weight: 400;
+	color: var(--iwell-on-navy);
+}
+
+/* 개인정보처리방침만 굵게·흰색 — 다른 법적 링크와 구분(시행령 제31조 제2항, 2026-11-25). */
+.iwell-footer .iwell-footer-nav__legal a.iwell-footer-nav__privacy {
 	font-weight: 700;
 	color: #fff;
 }
