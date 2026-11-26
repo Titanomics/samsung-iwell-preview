@@ -5,6 +5,19 @@
 - [빠르게 보는 GitHub Pages 정적 사본](https://titanomics.github.io/samsung-iwell-preview/)
 - [브라우저에서 WordPress로 여는 Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/main/blueprint.json)
 
+## 관리 화면 미리보기 (시험용)
+
+- [관리자로 보기](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/main/blueprint-admin.json) — 관리자 계정으로 로그인된 채 페이지 목록에서 시작
+- [직원으로 보기](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/main/blueprint-staff.json) — 직원 역할(`iwell_staff`, 운영 설치 때 직원에게 주는 역할)로 로그인된 채 페이지 목록에서 시작
+
+보는 사람 브라우저 안에서만 도는 **임시 시험 사이트**입니다. 고쳐도 실제 사이트·다른 사람의 화면에는 아무 영향이 없고, 창을 닫으면 사라집니다.
+내용·플러그인은 위 공개 미리보기와 같습니다(한국어 62쪽 + 외국어 30쪽, 원장 칼럼 11편, Rank Math 1.0.282·PublishPress Revisions 4.3.2, iwell 테마·코어 main `529145f`). 관리 화면은 한국어(ko_KR 번역은 wordpress.org 에서 받음)입니다.
+
+시험 계정(시험용, 실제 사이트와 무관): 관리자 = 미리보기 DB 의 `admin`, 직원 = `staff-test`("직원(시험용)"). 두 계정 모두 비밀번호가 아무도 모르는 임의 값이고 Playground 자동 로그인으로만 들어갑니다. 실제 운영 계정·비밀번호·키는 들어 있지 않습니다.
+원장 계정은 없습니다 — 직원은 게시된 쪽을 바로 고칠 수 없고("편집하도록 허용하지 않았습니다"), 페이지 목록의 **수정 생성**으로 수정안을 만들어 **수정 제출**까지 할 수 있습니다. 원장 승인 단계는 이 미리보기에서 보이지 않습니다.
+지금 편집기에서는 진료시간 표 같은 iwell 블록이 "지원하지 않는 블록"으로 보입니다(편집 화면 개선 작업 중 — 반영되면 다시 고정합니다). 카페24 가 미리 깔아 두는 보안 플러그인(로그인 잠금·2단계 인증 등)은 없습니다.
+처음 열 때 2026-11-27 설치된 Chrome headless 1440 폭에서 관리자 약 24초·직원 약 22초 걸렸습니다.
+
 ## 반영 기준
 
 2026-11-27 main `529145f`(PR #5 — 외국어 쪽 백신 영문명, 예: varicella vaccine / BARYCELA) 기준 최종 미리보기입니다. 57bbbf4 로 만든 사이트에서 바뀐 것만 차례로 반영했습니다 — 1252c45: 홈 제목 설정·홈 쪽 나눔 없음, be8360a: 정헌종 원장 쪽 추가·고시환 이력 네 칸·진료시간 표 일요일 줄, 4f90535: 영어·베트남어·중국어 쪽 30개(`setup-site` 가 `content/i18n` 에서 게시)·모든 쪽 머리의 언어 전환 단추·hreflang. 한국어 쪽은 머리(언어 단추)·언어 속성·hreflang·오늘 진료 날짜 말고 바이트가 같습니다.

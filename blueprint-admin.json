@@ -1,0 +1,101 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "삼성아이웰 관리 화면 미리보기 — 관리자로 보기",
+    "description": "시험용 관리 화면(관리자 계정으로 로그인). 이 브라우저 안에서만 도는 임시 사이트 — 고쳐도 실제 사이트에 영향 없음. main 529145f 자산.",
+    "author": "Titanomics"
+  },
+  "landingPage": "/wp-admin/edit.php?post_type=page",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "steps": [
+    {
+      "step": "importWordPressFiles",
+      "wordPressFilesZip": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/e67e88a66f2c1e94d9a33f7d9097c1f7fe4b4e9a/content.zip"
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "twentytwentyfive"
+      },
+      "ifAlreadyInstalled": "skip",
+      "options": {
+        "activate": false
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "seo-by-rank-math.1.0.282.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "revisionary.4.3.2.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/e67e88a66f2c1e94d9a33f7d9097c1f7fe4b4e9a/iwell-theme.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/e67e88a66f2c1e94d9a33f7d9097c1f7fe4b4e9a/iwell-core.zip"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "삼성아이웰소아청소년과",
+        "timezone_string": "Asia/Seoul",
+        "revisionary_activation_done": "1",
+        "rank_math_registration_skip": "1",
+        "rvy_revision_edit_disable_rank_math": "0",
+        "permalink_structure": "/%category%/%postname%/",
+        "blog_public": "0"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n// 로컬 주소(http://127.0.0.1:9411)를 이 미리보기 주소로 바꾼다 — 직렬화 값은 풀어서 바꾸고 다시 묶는다(wp search-replace 와 같은 결과). JSON 이스케이프 형태(http:\\/\\/…)도.\nrequire_once '/wordpress/wp-load.php';\nglobal $wpdb;\n$old  = 'http://127.0.0.1:9411';\n$new  = untrailingslashit( home_url() );\n$map  = array( $old => $new, str_replace( '/', '\\\\/', $old ) => str_replace( '/', '\\\\/', $new ) );\n$walk = function ( $v ) use ( &$walk, $map ) {\n\tif ( is_string( $v ) ) { return strtr( $v, $map ); }\n\tif ( is_array( $v ) ) { foreach ( $v as $k => $x ) { $v[ $k ] = $walk( $x ); } return $v; }\n\tif ( $v instanceof stdClass ) { foreach ( get_object_vars( $v ) as $k => $x ) { $v->$k = $walk( $x ); } return $v; }\n\treturn $v;\n};\n$fix = function ( $raw ) use ( $walk, $old ) {\n\tif ( ! is_string( $raw ) || ( false === strpos( $raw, '127.0.0.1:9411' ) ) ) { return null; }\n\tif ( is_serialized( $raw ) ) {\n\t\tif ( false !== strpos( $raw, '__PHP_Incomplete_Class' ) ) { return null; }\n\t\t$u = @unserialize( $raw, array( 'allowed_classes' => array( 'stdClass' ) ) );\n\t\treturn false === $u && 'b:0;' !== $raw ? null : serialize( $walk( $u ) );\n\t}\n\treturn $walk( $raw );\n};\n$targets = array(\n\tarray( $wpdb->posts, 'ID', array( 'post_content', 'post_excerpt', 'guid' ) ),\n\tarray( $wpdb->postmeta, 'meta_id', array( 'meta_value' ) ),\n\tarray( $wpdb->options, 'option_id', array( 'option_value' ) ),\n\tarray( $wpdb->termmeta, 'meta_id', array( 'meta_value' ) ),\n\tarray( $wpdb->usermeta, 'umeta_id', array( 'meta_value' ) ),\n\tarray( $wpdb->comments, 'comment_ID', array( 'comment_content', 'comment_author_url' ) ),\n\tarray( $wpdb->commentmeta, 'meta_id', array( 'meta_value' ) ),\n);\n$n = 0;\nforeach ( $targets as list( $table, $pk, $cols ) ) {\n\tforeach ( $cols as $col ) {\n\t\t$rows = $wpdb->get_results( \"SELECT `$pk` AS id, `$col` AS v FROM `$table` WHERE `$col` LIKE '%127.0.0.1:9411%'\" );\n\t\tforeach ( $rows as $r ) {\n\t\t\t$v = $fix( $r->v );\n\t\t\tif ( null !== $v && $v !== $r->v ) { $wpdb->update( $table, array( $col => $v ), array( $pk => $r->id ) ); $n++; }\n\t\t}\n\t}\n}\nwp_cache_flush();\nflush_rewrite_rules();\n$left = (int) $wpdb->get_var( \"SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_content LIKE '%127.0.0.1:9411%' OR guid LIKE '%127.0.0.1:9411%'\" ) + (int) $wpdb->get_var( \"SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_value LIKE '%127.0.0.1:9411%'\" );\necho \"preview url $new — replaced $n, left $left\";\n"
+    },
+    {
+      "step": "setSiteLanguage",
+      "language": "ko_KR"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\n// 관리 화면 미리보기(관리자로 보기) — 관리자 계정 화면 언어를 한국어로(사이트 언어를 따름). 비밀번호는 바꾸지 않는다(아무도 모르는 임의 값, 로그인은 Playground 자동 로그인으로만).\nrequire_once '/wordpress/wp-load.php';\n$u = get_user_by( 'login', 'admin' );\nif ( ! $u ) { throw new RuntimeException( 'admin missing' ); }\nupdate_user_meta( $u->ID, 'locale', '' );\necho 'admin ok: ' . $u->ID;\n"
+    },
+    {
+      "step": "login",
+      "username": "admin"
+    }
+  ]
+}
