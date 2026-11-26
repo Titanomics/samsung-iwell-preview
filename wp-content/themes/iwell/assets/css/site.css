@@ -2910,3 +2910,12 @@ body .iwell-lang-page > * {
 .iwell-lang-body .iwell-doctor {
 	margin-top: 32px;
 }
+
+/* 외국어 쪽 원천 표가 아직 없을 때(한국어 쪽 게시 전) 안내 — I18n\Cells::pending(). */
+.iwell-source-pending {
+	margin: 0 0 16px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: var(--iwell-ivory);
+	color: var(--iwell-ink);
+}
