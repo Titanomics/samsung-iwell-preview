@@ -2321,6 +2321,58 @@ body .iwell-sec > * {
 	border-radius: var(--iwell-radius);
 }
 
+/* 원장 이력 네 칸(주요경력·학술활동·대외활동·출간 저서 — 대표 2026-11-26 "그림처럼 4칸", 옛 홈페이지 배치):
+   넓은 화면 2×2, 휴대폰은 한 줄씩 쌓는다. 칸 머리 = 남색 둥근 이름표(옛 홈페이지 모양). */
+.iwell-history {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 16px;
+	margin-top: 24px !important;
+}
+
+@media (min-width: 768px) {
+	.iwell-history {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 20px 24px;
+	}
+}
+
+body .iwell-history > .iwell-history__group {
+	min-width: 0;
+	margin: 0 !important;
+	padding: 20px 20px 16px;
+	border: 1px solid var(--iwell-line);
+	border-radius: var(--iwell-radius);
+	background: #fff;
+}
+
+body .iwell-history__group > h3 {
+	display: inline-block;
+	margin: 0 0 12px !important;
+	padding: 4px 18px;
+	border-radius: 999px;
+	background: var(--iwell-navy);
+	color: #fff;
+	font-size: 1.0625rem;
+	line-height: var(--iwell-lh-tight);
+}
+
+body .iwell-history__group > ul {
+	margin: 0 !important;
+	padding-left: 1.2em;
+}
+
+.iwell-history__group li {
+	margin-top: 6px;
+	line-height: var(--iwell-lh-tight);
+	word-break: keep-all;
+	overflow-wrap: anywhere;
+}
+
+.iwell-history__group li::marker {
+	color: var(--iwell-navy);
+}
+
 /* 외부 프로필(템플릿 — 메타 sameAs) */
 .iwell-profiles {
 	margin-top: 52px !important;
