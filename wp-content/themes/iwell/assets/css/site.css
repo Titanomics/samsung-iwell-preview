@@ -2622,3 +2622,291 @@ body .iwell-board-item > * {
 	margin-top: 1px;
 	color: var(--iwell-navy);
 }
+
+/* ── 외국어 쪽 시제품(2026-11-26) — 언어 전환 단추·외국어 머리·번역 안내 ─────────────── */
+
+/* 언어 전환 단추 — <details>(자바스크립트 없음). 모바일: 드로어 단추 바로 왼쪽. PC(1200px~): 머리 격자 셋째 칸. */
+.iwell-lang {
+	position: relative;
+	flex: none;
+	margin-left: auto;
+}
+
+.iwell-lang > summary {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 44px;
+	padding: 0 12px;
+	border: 1px solid var(--iwell-line);
+	border-radius: 999px;
+	color: var(--iwell-navy);
+	font-size: 0.875rem;
+	font-weight: 700;
+	white-space: nowrap;
+	cursor: pointer;
+	list-style: none;
+}
+
+.iwell-lang > summary::-webkit-details-marker {
+	display: none;
+}
+
+.iwell-lang > summary:hover,
+.iwell-lang[open] > summary {
+	background: var(--iwell-tint);
+	border-color: var(--iwell-sky);
+}
+
+.iwell-lang__list {
+	position: absolute;
+	top: calc(100% + 8px);
+	right: 0;
+	z-index: 80;
+	min-width: 200px;
+	margin: 0;
+	padding: 6px;
+	list-style: none;
+	background: #fff;
+	border: 1px solid var(--iwell-line);
+	border-radius: 14px;
+	box-shadow: var(--iwell-shadow);
+}
+
+.iwell-lang__list li {
+	margin: 0;
+}
+
+.iwell-lang__item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 44px;
+	padding: 0 12px;
+	border-radius: 10px;
+	color: var(--iwell-ink);
+	text-decoration: none;
+}
+
+a.iwell-lang__item:hover,
+a.iwell-lang__item:focus-visible {
+	background: var(--iwell-tint);
+	color: var(--iwell-navy);
+}
+
+.iwell-lang__item[aria-current] {
+	background: var(--iwell-tint);
+	color: var(--iwell-navy);
+	font-weight: 700;
+}
+
+.iwell-lang__code {
+	min-width: 3.2em;
+	font-size: 0.8125rem;
+	font-weight: 800;
+	color: var(--iwell-navy);
+}
+
+.iwell-lang__item.is-pending {
+	color: var(--iwell-muted);
+	cursor: default;
+}
+
+.iwell-lang__item.is-pending .iwell-lang__code {
+	color: var(--iwell-muted);
+}
+
+.iwell-lang__item small {
+	margin-left: auto;
+	font-size: 0.75rem;
+}
+
+@media (min-width: 1200px) {
+	/* 언어 단추가 있을 때만 셋째 칸(단추가 없는 사이트 — 언어 홈 미게시 — 는 머리 격자가 지금과 같다). */
+	.iwell-header:has(.iwell-lang) .iwell-header__inner {
+		grid-template-columns: var(--iwell-logo-w) minmax(0, 1fr) auto;
+	}
+
+	.iwell-lang {
+		margin-left: 0;
+	}
+
+	/* 메가메뉴 하위 열이 1차 줄과 같은 폭(셋째 칸 = 언어 단추 폭만큼 오른쪽을 비운다). */
+	.iwell-header:has(.iwell-lang) .iwell-mega__inner {
+		padding-right: calc(var(--iwell-gutter) + var(--iwell-lang-w, 88px) + 40px);
+	}
+
+	.iwell-header:has(.iwell-lang) .iwell-lang > summary {
+		min-width: var(--iwell-lang-w, 88px);
+		justify-content: center;
+	}
+}
+
+/* 외국어 쪽 머리 — 메뉴 몇 개(홈·진료시간)만, 왼쪽 정렬. */
+@media (min-width: 1200px) {
+	.iwell-gnb--lang .iwell-gnb__top {
+		column-gap: 8px;
+	}
+
+	.iwell-gnb--lang .iwell-gnb__hub {
+		padding: 0 14px;
+	}
+}
+
+.iwell-header--lang .iwell-drawer__panel::before {
+	content: attr(data-title);
+}
+
+/* 외국어 쪽 본문 */
+body .iwell-lang-page > * {
+	margin-block-start: 0;
+}
+
+.iwell-lang-title {
+	margin: 0 0 16px;
+	font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.25rem);
+	letter-spacing: -0.01em;
+	color: var(--iwell-navy);
+}
+
+.iwell-lang-lead {
+	max-width: 760px;
+	margin: 0 0 28px;
+	line-height: var(--iwell-lh-body);
+}
+
+.iwell-lang-hours h2 {
+	margin: 48px 0 20px;
+}
+
+.iwell-lang-care__list {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+@media (min-width: 768px) {
+	.iwell-lang-care__list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.iwell-lang-care__list li {
+	padding: 16px 20px;
+	border: 1px solid var(--iwell-line);
+	border-radius: 12px;
+	background: #fff;
+	font-weight: 700;
+	color: var(--iwell-navy);
+}
+
+.iwell-lang-note {
+	padding: 0 0 56px;
+}
+
+.iwell-lang-note__inner {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	max-width: var(--iwell-max);
+	margin: 0 auto;
+	padding: 14px var(--iwell-gutter);
+	color: var(--iwell-muted);
+	font-size: 0.875rem;
+	line-height: var(--iwell-lh-tight);
+}
+
+.iwell-lang-note__inner p {
+	margin: 0;
+}
+
+.iwell-lang-note__inner .iwell-icon {
+	flex: none;
+	margin-top: 1px;
+	color: var(--iwell-navy);
+}
+
+.iwell-lang-page :lang(en) {
+	word-break: normal;
+}
+
+/* 외국어 쪽 주소 아래 한국어 주소(택시·지도 앱에 그대로 보여 주는 용도) — 손 줄바꿈 대신 한 줄 블록. */
+.iwell-location__ko {
+	display: block;
+	color: var(--iwell-muted);
+}
+
+/* 외국어 쪽 본문(2026-11-26 — 영어·베트남어·중국어 10쪽): 글 구역·사실 목록·링크 줄·진료시간 요약·원천 표·사진 없는 의료진. */
+.iwell-lang-body .iwell-section__inner > h2 {
+	margin: 40px 0 16px;
+}
+
+.iwell-lang-body .iwell-section__inner > h3,
+.iwell-doctor__text > h3 {
+	margin: 24px 0 8px;
+	font-size: 1.0625rem;
+	color: var(--iwell-navy);
+}
+
+.iwell-lang-body .iwell-section__inner > p,
+.iwell-lang-body .iwell-section__inner > ul,
+.iwell-doctor__text > ul {
+	max-width: 760px;
+	margin: 0 0 var(--iwell-flow);
+	line-height: var(--iwell-lh-body);
+}
+
+.iwell-lang-facts {
+	display: grid;
+	gap: 8px;
+	padding: 0;
+	list-style: none;
+}
+
+.iwell-lang-facts li {
+	padding: 12px 16px;
+	border-left: 4px solid var(--iwell-sky);
+	border-radius: 0 12px 12px 0;
+	background: var(--iwell-tint);
+}
+
+.iwell-lang-links {
+	margin-top: 28px !important;
+	font-weight: 700;
+}
+
+.iwell-lang-links a {
+	color: var(--iwell-sky-ink);
+}
+
+.iwell-lang-summary {
+	margin: 0 0 16px !important;
+}
+
+.iwell-lang-summary .iwell-topbar__note {
+	color: var(--iwell-ink);
+}
+
+.iwell-hours-line {
+	margin: 0 0 12px;
+	font-weight: 700;
+	color: var(--iwell-navy);
+}
+
+.iwell-source-table {
+	margin: 0 0 16px;
+	overflow-x: auto;
+}
+
+.iwell-doctor--text {
+	display: block;
+	margin-top: 40px;
+	padding-top: 32px;
+	border-top: 1px solid var(--iwell-line);
+}
+
+.iwell-lang-body .iwell-doctor {
+	margin-top: 32px;
+}
