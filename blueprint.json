@@ -2,7 +2,7 @@
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
     "title": "삼성아이웰 홈페이지 미리보기",
-    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation 57bbbf4 기준 최종 미리보기(깨끗한 로컬 사이트·원장 칼럼 11편).",
+    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation 1252c45 기준 최종 미리보기(홈 제목·홈 쪽 나눔 없음, 원장 칼럼 11편).",
     "author": "Titanomics"
   },
   "landingPage": "/",
@@ -16,7 +16,7 @@
       "step": "importWordPressFiles",
       "wordPressFilesZip": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/content.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/b0d4f5165a2a83eeb0a1505465973c0a1cedb7f2/content.zip"
       }
     },
     {
@@ -54,7 +54,7 @@
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/iwell-theme.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/b0d4f5165a2a83eeb0a1505465973c0a1cedb7f2/iwell-theme.zip"
       },
       "options": {
         "activate": true
@@ -64,7 +64,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/iwell-core.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/b0d4f5165a2a83eeb0a1505465973c0a1cedb7f2/iwell-core.zip"
       },
       "options": {
         "activate": true
