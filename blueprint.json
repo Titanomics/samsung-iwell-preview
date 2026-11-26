@@ -2,7 +2,7 @@
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
   "meta": {
     "title": "삼성아이웰 홈페이지 미리보기",
-    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation 0dbc4ab PC 퀵바 유튜브 바로가기 추가.",
+    "description": "원고 초안 — 원장 검토 전, 검토 표시 없음. foundation 57bbbf4 기준 최종 미리보기(깨끗한 로컬 사이트·원장 칼럼 11편).",
     "author": "Titanomics"
   },
   "landingPage": "/",
@@ -16,7 +16,7 @@
       "step": "importWordPressFiles",
       "wordPressFilesZip": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/5a7dfbf21816627ddbf7a7a64008d611cd70d83f/content.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/content.zip"
       }
     },
     {
@@ -51,32 +51,10 @@
       }
     },
     {
-      "step": "installPlugin",
-      "pluginData": {
-        "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/5a7dfbf21816627ddbf7a7a64008d611cd70d83f/kboard-6.8.zip"
-      },
-      "options": {
-        "activate": true,
-        "targetFolderName": "kboard"
-      }
-    },
-    {
-      "step": "installPlugin",
-      "pluginData": {
-        "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/5a7dfbf21816627ddbf7a7a64008d611cd70d83f/kboard-comments-5.7.zip"
-      },
-      "options": {
-        "activate": true,
-        "targetFolderName": "kboard-comments"
-      }
-    },
-    {
       "step": "installTheme",
       "themeData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/5a7dfbf21816627ddbf7a7a64008d611cd70d83f/iwell-theme.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/iwell-theme.zip"
       },
       "options": {
         "activate": true
@@ -86,7 +64,7 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "url",
-        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/5a7dfbf21816627ddbf7a7a64008d611cd70d83f/iwell-core.zip"
+        "url": "https://raw.githubusercontent.com/Titanomics/samsung-iwell-preview/94421976aa74af7e9720f18a260ef9e942165c16/iwell-core.zip"
       },
       "options": {
         "activate": true
